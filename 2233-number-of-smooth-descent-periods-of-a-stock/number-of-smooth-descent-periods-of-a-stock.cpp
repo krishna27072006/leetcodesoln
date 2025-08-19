@@ -10,9 +10,8 @@ public:
             }else{
                 ct=0;
             }
-
+            ans++;
         }
-        ans+=p.size();
-        return ans;
+        return ans+1;
     }
 };
