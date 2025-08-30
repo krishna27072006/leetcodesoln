@@ -9,9 +9,7 @@ public:
                 if(j%2==0){
                     e+=words[i][j];
                 }else{
-                    o+=words[i][j];
-                }
-            }
+                    o+=words[i][j];  } }
             sort(e.begin(),e.end());
             sort(o.begin(),o.end());
             s.insert({e,o});
