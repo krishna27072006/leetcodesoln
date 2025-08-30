@@ -3,11 +3,11 @@ public:
     int getMaximumConsecutive(vector<int>& coins) {
         
         sort(coins.begin(),coins.end());
-        long long reach=1;
+        long long ans=1;
         for(auto t : coins){
-            if(t>reach) break;
-            reach+=t;
+            if(t>ans) break;
+            ans+=t;
         } 
-        return (int)reach;
+        return (int)ans;
     }
 };
