@@ -7,15 +7,12 @@ public:
         }
         int sum=0;
         for(int i=0;i<nums[0].size();++i){
-            vector<int> v;
+            int maxi=0;
             for(int j=0;j<nums.size();++j){
-                v.push_back(nums[j][i]);
+                maxi=max(maxi,nums[j][i]);
             }
-            int max=*max_element(v.begin(),v.end());
-            sum+=max;
+            sum+=maxi;
         }
         return sum;
-
-        
     }
 };
