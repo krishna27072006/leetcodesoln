@@ -13,10 +13,6 @@ public:
         }
         int max=*max_element(v.begin(),v.end());
         return max;
-
-        
-
-        
         
     }
 };
