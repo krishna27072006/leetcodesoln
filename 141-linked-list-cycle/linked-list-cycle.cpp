@@ -6,22 +6,22 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
-#include <vector>
-#include <algorithm>
-
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
+        bool ans=false;
         vector<ListNode*> v;
-        ListNode* temp = head;
-
-        while (temp) {
-            if (find(v.begin(), v.end(), temp) != v.end()) {
-                return true;  // cycle found
+        ListNode*temp=head;
+        while(temp){
+            if(find(v.begin(), v.end(), temp) != v.end()){
+                ans=true;
+                break;
             }
             v.push_back(temp);
-            temp = temp->next; // move forward
+            temp=temp->next;
+
         }
-        return false;
+        return ans;
+        
     }
 };
