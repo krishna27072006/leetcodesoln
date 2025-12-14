@@ -1,6 +1,6 @@
 /**
  * Definition for singly-linked list.
- * struct ListNode {
+ * struct N {
  *     int val;
  *     ListNode *next;
  *     ListNode() : val(0), next(nullptr) {}
@@ -16,18 +16,18 @@ public:
         while(temp){
             ct++;
             temp=temp->next;
+
         }
         ListNode*ans=head;
-        int t=0;
         int k=(ct/2)+1;
+        int t=0;
         while(ans){
             t++;
             if(t==k){
-            break;
+                break;
             }
-        ans=ans->next;
+            ans=ans->next;
         }
         return ans;
-
     }
 };
