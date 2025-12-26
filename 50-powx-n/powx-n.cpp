@@ -1,22 +1,18 @@
 class Solution {
 public:
     double myPow(double x, int n) {
-        long long m = n;
-        if (m < 0) {
-            x = 1 / x;
-            m = -m;
+        if(n<0){
+            return 1.0/power(x,-(long long )n);
+
         }
-        return fastpow(x, m);
+        return power(x,n);
+        
     }
+double power(double x, long long int n){
+    if(n==0) return 1;
+    double half= power(x,n/2);
+    if(n%2==0) return half*half;
+    return half*half*x;
+}
 
-    double fastpow(double x, long long n) {
-        if (n == 0) return 1.0;
-
-        double half = fastpow(x, n / 2);
-
-        if (n % 2 == 0)
-            return half * half;
-        else
-            return half * half * x;
-    }
 };
