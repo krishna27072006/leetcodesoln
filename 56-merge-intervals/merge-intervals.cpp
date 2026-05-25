@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
         sort(intervals.begin(), intervals.end(), [](vector<int>& a, vector<int>& b) {
-        return a[0] <b[0];   // bigger first element comes first
+        return a[0] <b[0];  
         });
 
         vector<int> c;
