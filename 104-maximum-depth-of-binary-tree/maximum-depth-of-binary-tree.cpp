@@ -9,31 +9,15 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-
-void count(TreeNode* root,int ct,int &ans){
-    if(root==NULL) return;   // added
-
-    ct++;
-    if(root->left!=NULL&& root->right!=NULL){
-      count(root->left,ct,ans);
-      count(root->right,ct,ans);
-    }else if(root->left!=NULL&& root->right==NULL){
-        count(root->left,ct,ans);
-    }else if(root->left==NULL&& root->right!=NULL){
-        count(root->right,ct,ans);
-    }else{
-        ans=max(ans,ct);
-        return;
-    }
-}
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
-        if (root==NULL) return 0;
-        int ct=0;
-        int ans=0;
-        TreeNode* temp=root;
-        count(root,ct,ans);
-        return ans;
+        if(root==NULL) return 0;
+
+        int lh=maxDepth(root->left);
+        int rh=maxDepth(root->right);
+
+         return 1+max(lh,rh);
+        
     }
 };
