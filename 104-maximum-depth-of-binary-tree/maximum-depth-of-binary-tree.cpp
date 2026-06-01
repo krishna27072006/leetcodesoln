@@ -10,7 +10,9 @@
  * };
  */
 
- void count(TreeNode* root,int ct,int &ans){
+void count(TreeNode* root,int ct,int &ans){
+    if(root==NULL) return;   // added
+
     ct++;
     if(root->left!=NULL&& root->right!=NULL){
       count(root->left,ct,ans);
@@ -23,7 +25,7 @@
         ans=max(ans,ct);
         return;
     }
- }
+}
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
