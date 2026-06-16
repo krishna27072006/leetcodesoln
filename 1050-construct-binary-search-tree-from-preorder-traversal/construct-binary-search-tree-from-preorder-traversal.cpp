@@ -12,18 +12,32 @@
 class Solution {
 public:
     TreeNode* bstFromPreorder(vector<int>& preorder) {
-        if(preorder.empty()) return NULL;
+        stack<TreeNode*> st;
         TreeNode* root=new TreeNode(preorder[0]);
-        int i;
-        for(i=0;i<preorder.size();++i){
-            if(preorder[i]>preorder[0]){
-                break;
+        st.push(root);
+        int i=1;
+        int prev=preorder[0];
+        TreeNode* node=root;
+        while(i<preorder.size()){
+            if(preorder[i]<prev){
+                TreeNode* temp=new TreeNode(preorder[i]);
+                st.top()->left=temp;
+                st.push(temp);
+                prev=preorder[i];
+            }else{
+                TreeNode* parent=NULL;
+                while( !st.empty() && st.top()->val<preorder[i]){
+                    parent=st.top();
+                    st.pop();
+                }
+                TreeNode* temp=new TreeNode(preorder[i]);
+                parent->right=temp;
+                st.push(temp);
+                prev=preorder[i];
+
             }
+            i++;
         }
-        vector<int> left(preorder.begin()+1,preorder.begin()+i);
-        vector<int> right(preorder.begin()+i,preorder.end());
-        root->left=bstFromPreorder(left);
-        root->right=bstFromPreorder(right);
         return root;
     }
 };
