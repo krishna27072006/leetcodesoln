@@ -1,41 +1,91 @@
+class DisjointSet {
+    
+
+public:
+vector<int> parent, rank, size;
+    DisjointSet(int n) {
+        rank.resize(n + 1, 0);
+        parent.resize(n + 1);
+        size.resize(n + 1, 1);
+
+        for (int i = 0; i <= n; i++) {
+            parent[i] = i;
+        }
+    }
+
+    // Find with Path Compression
+    int findUPar(int node) {
+        if (node == parent[node])
+            return node;
+
+        return parent[node] = findUPar(parent[node]);
+    }
+
+    // Union by Rank
+    void unionByRank(int u, int v) {
+        int ulp_u = findUPar(u);
+        int ulp_v = findUPar(v);
+
+        if (ulp_u == ulp_v)
+            return;
+
+        if (rank[ulp_u] < rank[ulp_v]) {
+            parent[ulp_u] = ulp_v;
+        }
+        else if (rank[ulp_v] < rank[ulp_u]) {
+            parent[ulp_v] = ulp_u;
+        }
+        else {
+            parent[ulp_v] = ulp_u;
+            rank[ulp_u]++;
+        }
+    }
+
+    // Union by Size
+    void unionBySize(int u, int v) {
+        int ulp_u = findUPar(u);
+        int ulp_v = findUPar(v);
+
+        if (ulp_u == ulp_v)
+            return;
+
+        if (size[ulp_u] < size[ulp_v]) {
+            parent[ulp_u] = ulp_v;
+            size[ulp_v] += size[ulp_u];
+        }
+        else {
+            parent[ulp_v] = ulp_u;
+            size[ulp_u] += size[ulp_v];
+        }
+    }
+};
+
 class Solution {
 public:
-    int makeConnected(int V, vector<vector<int>>& c) {
-        int m = c.size();
-        if (V - 1 > m) {
-            return -1;
+    int makeConnected(int n, vector<vector<int>>& connections) {
+        DisjointSet ds(n);
+        int extra=0;
+        for(int i=0;i<connections.size();++i){
+            int u=connections[i][0];
+            int v=connections[i][1];
+            if(ds.findUPar(u)==ds.findUPar(v)){
+                extra++;
+            }else{
+                ds.unionBySize(u,v);
+            }
+
         }
-
-        vector<vector<int>> adj(V);
-        for (int i = 0; i < m; ++i) {
-            adj[c[i][0]].push_back(c[i][1]);
-            adj[c[i][1]].push_back(c[i][0]);
-        }
-
-        queue<int> q;
-        vector<int> vist(V, 0);
-        int iter = 0;
-
-        for (int i = 0; i < V; ++i) {
-            if (vist[i] == 0) {
-                iter++;
-                vist[i] = 1;
-                q.push(i);
-
-                while (!q.empty()) {
-                    int node = q.front();
-                    q.pop();
-
-                    for (auto adj_node : adj[node]) {
-                        if (!vist[adj_node]) {
-                            vist[adj_node] = 1;
-                            q.push(adj_node);
-                        }
-                    }
-                }
+        int cnt=0;
+        for(int i=0;i<n;++i){
+            if(ds.parent[i]==i){
+                cnt++;
             }
         }
-
-        return iter - 1;
+        if(cnt-1<=extra){
+              return cnt-1;
+        }else{
+            return -1;
+        }
+        
     }
 };
