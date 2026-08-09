@@ -10,9 +10,9 @@ public:
                 }else{
                     int a=0;
                     int b=0;
-                    if(i>0){
+                    
                         a=prev[j];
-                    }
+                    
                     if(j>0){
                         b=curr[j-1];
                     }
