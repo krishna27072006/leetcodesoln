@@ -9,16 +9,23 @@
 class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
-        vector<ListNode*> v;
-        ListNode*temp=head;
-        while(temp){
-            if(find(v.begin(), v.end(), temp) != v.end()){
-                return temp;
-                break;
+        ListNode* slow=head;
+        ListNode* fast=head;
+        while(fast!=NULL && fast->next!=NULL){
+            slow=slow->next;
+            fast=fast->next->next;
+            if(fast==slow){
+                slow = head;
+
+                while (slow != fast) {
+                    slow = slow->next;
+                    fast = fast->next;
+                }
+
+                return slow;
             }
-            v.push_back(temp);
-            temp=temp->next;
         }
-        return nullptr;
+        return NULL;
+        
     }
 };
