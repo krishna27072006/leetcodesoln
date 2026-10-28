@@ -1,21 +1,23 @@
 class Solution {
 public:
-    double myPow(double x, int n) {
-        double ans=1;
-        long long  n1=llabs(n);
-        while(n1>0){
-            if(n1%2!=0){
-                n1=n1-1;
-                ans=ans*x;
-            }else{
-                n1=n1/2;
-                x=x*x;
-
-            }
-            
+    long double f(long double x,long long n){
+        if(n==0){
+            return 1.0L;
         }
-        if(n<0) return (1/ans);
-        return ans;
-        
+       long  double half=f(x,n/2);
+        if(n%2==0){
+            return half*half;
+        }else{
+            return x*half*half;
+        }
+    }
+    double myPow(double x, int n) {
+        long long p=n;
+        long double base=x;
+        if(p<0){
+            base=1.0L/base;
+            p=-p;
+        }
+        return (double)f(base,p);
     }
 };
