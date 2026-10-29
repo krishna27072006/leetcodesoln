@@ -1,28 +1,28 @@
 class Solution {
 public:
-    void genrate(int open,int close,string s,vector<string>& v){
-        
+    void f(int open ,int close,vector<string> &ans,string &s){
         if(open==0 && close==0){
-            v.push_back(s);
+            ans.push_back(s);
             return;
         }
         if(open>0){
-            genrate(open-1,close,s+'(',v);
+            s+='(';
+            f(open-1,close,ans,s);
+            s.pop_back();
         }
         if(close>open){
-            genrate(open,close-1,s+')',v);
+            s+=')';
+            f(open,close-1,ans,s);
+            s.pop_back();
         }
-
-
-
     }
     vector<string> generateParenthesis(int n) {
-        string s="";
-        vector<string> v;
-        genrate(n,n,s,v);
-        return v;
-        
-
+           vector<string> ans;
+           string s="";
+           int open=n;
+           int close=n;
+           f(open,close,ans,s);
+           return ans;
         
     }
 };
