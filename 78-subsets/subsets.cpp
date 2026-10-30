@@ -1,27 +1,20 @@
 class Solution {
 public:
-
-    void genrate(int i,int n,vector<int>& v,vector<vector<int>>& ans,vector<int>nums){
-        if(i>=n){
-            ans.push_back(v);
-            cout<<endl;
+    void f(vector<int> &num,vector<vector<int>> &v,int i,vector<int> a){
+        if(i>=num.size()){
+            v.push_back(a);
             return;
         }
-        v.push_back(nums[i]);
-        genrate(i+1,n,v,ans,nums);
-        v.pop_back();
-        genrate(i+1,n,v,ans,nums);
-
+        a.push_back(num[i]);
+        f(num,v,i+1,a);
+        a.pop_back();
+        f(num,v,i+1,a);
     }
     vector<vector<int>> subsets(vector<int>& nums) {
-        vector<int> v;
-        vector<vector<int>> ans;
-
-        int n=nums.size();
-        genrate(0,n,v,ans,nums);
-        return ans;
-
-
-        
+        vector<vector<int>> v;
+        vector<int> a;
+        f(nums,v,0,a);
+        return v;
+         
     }
 };
