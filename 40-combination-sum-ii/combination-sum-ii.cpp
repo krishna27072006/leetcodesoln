@@ -1,33 +1,26 @@
 class Solution {
 public:
-
-    void genrate(int i,int t,vector<int>& c,vector<int>& v,vector<vector<int>>& ans){
-        int sum=0;
-        for(int i=0;i<v.size();++i){
-            sum+=v[i];
-        }
-        if(sum==t){
-            ans.push_back(v);
+void f(vector<vector<int>> &v,int &target,vector<int> &a,int sum,int i,vector<int>& c){
+        if(sum==target){
+            v.push_back(a);
             return;
         }
-        if(sum>t || i>=c.size()) return;
-        v.push_back(c[i]);
-        genrate(i+1,t,c,v,ans);
-        v.pop_back();
-        int n=i+1;
-        while (n < c.size() && c[n] == c[i]) n++;
-        genrate(n,t,c,v,ans);
-
-
-
+        if(sum>target || i>=c.size()){
+            return;
+        }
+        a.push_back(c[i]);
+        f(v,target,a,sum+c[i],i+1,c);
+        a.pop_back();
+        while (i+1<c.size() && c[i]==c[i+1]){
+               i++;
+        }
+        f(v,target,a,sum,i+1,c);
     }
-    vector<vector<int>> combinationSum2(vector<int>& c, int t) {
-        sort(c.begin(),c.end());
-        vector<vector<int>> ans;
-        vector<int> v;
-        genrate(0,t,c,v,ans);
-        return ans;
-
-        
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector<vector<int>> v;
+        vector<int> a;
+        sort(candidates.begin(), candidates.end());
+        f(v,target,a,0,0,candidates);
+        return v;
     }
 };
