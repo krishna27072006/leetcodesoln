@@ -1,26 +1,23 @@
 class Solution {
 public:
-    void genrate(int i,int target,vector<int>& c,vector<int> v,vector<vector<int>>& ans){
-        int sum=0;
-        for(auto t : v) sum+=t;
+    void f(vector<vector<int>> &v,int &target,vector<int> &a,int sum,int i,vector<int>& c){
         if(sum==target){
-            ans.push_back(v);
+            v.push_back(a);
             return;
         }
-        if(sum>target || i>=c.size()) return;
-
-        v.push_back(c[i]);
-        genrate(i,target,c,v,ans);
-        v.pop_back();
-        genrate(i+1,target,c,v,ans);
+        if(sum>target || i>=c.size()){
+            return;
+        }
+        a.push_back(c[i]);
+        f(v,target,a,sum+c[i],i,c);
+        a.pop_back();
+        f(v,target,a,sum,i+1,c);
 
     }
-    vector<vector<int>> combinationSum(vector<int>& c, int target) {
-        vector<int> v;
-        vector<vector<int>> ans;
-        genrate(0,target,c,v,ans);
-        return ans;
-
-        
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> v;
+        vector<int> a;
+        f(v,target,a,0,0,candidates);
+        return v;
     }
 };
