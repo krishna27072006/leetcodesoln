@@ -1,44 +1,35 @@
 class Solution {
 public:
-    void genrate(int i,int k,vector<int>& temp,vector<vector<int>>& ans,vector<int>& v){
-        if(temp.size()==k){
-            ans.push_back(temp);
+    void f(vector<vector<int>> &v,int &target,vector<int> &a,int sum,int i,vector<int>& c){
+        if(sum==target){
+            v.push_back(a);
             return;
         }
-
-        if(i>=v.size()) return;
-        temp.push_back(v[i]);
-        genrate(i+1,k,temp,ans,v);
-        temp.pop_back();
-        genrate(i+1,k,temp,ans,v);
-
-
-
+        if(sum>target || i>=c.size()){
+            return;
+        }
+        a.push_back(c[i]);
+        f(v,target,a,sum+c[i],i+1,c);
+        a.pop_back();
+        while (i+1<c.size() && c[i]==c[i+1]){
+               i++;
+        }
+        f(v,target,a,sum,i+1,c);
     }
-
     vector<vector<int>> combinationSum3(int k, int n) {
-        vector<int> v;
+        vector<int> a;
         for(int i=0;i<9;++i){
-            v.push_back(i+1);
+            a.push_back(i+1);
         }
-        vector<vector<int>> ans;
-        vector<vector<int>> f;
+        vector<vector<int>> v;
         vector<int> temp;
-        genrate(0,k,temp,ans,v);
-
-        for(int i=0;i<ans.size();++i){
-            int sum=0;
-            for(int j=0;j<ans[i].size();++j){
-                sum+=ans[i][j];
-            }
-            if(sum==n){
-                f.push_back(ans[i]);
-
-            }
-        }
-        return f;
-
-    
-        
+        f(v,n,temp,0,0,a);
+        v.erase(
+            remove_if(v.begin(), v.end(), [&](vector<int>& a) {
+            return a.size() != k;
+            }),
+          v.end()
+        );
+        return v;
     }
 };
