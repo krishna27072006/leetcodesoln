@@ -2,15 +2,16 @@ class Solution {
 public:
 
     void genrate(int i,string s,vector<string>& v,vector<vector<char>>& b){
-        if(s.size()==b.size()){
-            v.push_back(s);
-            return;
-        }
-        if(i>=b.size()) return;
-
-        for(auto c : b[i]){
-            genrate(i+1,s+c,v,b);
-        }
+       if(s.size()==b.size()){
+        v.push_back(s);
+        return;
+       }
+       if(i>b.size()){
+        return;
+       }
+       for (auto t:b[i]){
+        genrate(i+1,s+t,v,b);
+       }
 
         
     }
