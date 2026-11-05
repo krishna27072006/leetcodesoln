@@ -13,6 +13,7 @@ public:
     vector<vector<int>> subsets(vector<int>& nums) {
         vector<vector<int>> v;
         vector<int> a;
+        sort(nums.begin(),nums.end());
         f(nums,v,0,a);
         return v;
          
